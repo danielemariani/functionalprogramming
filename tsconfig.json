@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./build",
+    "sourceMap": false,
+    "types": ["node", "jest"],
+    "typeRoots": [
+      "@types",
+      "./@types"
+    ]
+  },
+  "include": [
+    "./@types",
+    "./src/**/*",
+    "./src/resources/**/*"
+  ],
+  "exclude": [
+    "./config/**/*",
+    "node_modules"
+  ]
+}

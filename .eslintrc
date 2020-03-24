@@ -1,0 +1,42 @@
+
+{
+  "parser": "typescript-eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "plugins": [
+    "import",
+    "typescript"
+  ],
+  "rules": {
+    "allowEmptyCatch": true,
+    "allowShortCircuit": true,
+    "class-methods-use-this": 0,
+    "no-use-before-define": 0,
+    "object-shorthand": "off",
+    "arrow-body-style": "off",
+    "no-plusplus": [2, {"allowForLoopAfterthoughts": true}],
+    "lines-between-class-members": 0,
+    "prettier/prettier": [
+      "warning",
+      {
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "arrowParens": "always"
+      }
+    ],
+    "typescript/class-name-casing": 1
+  },
+  "settings": {
+    "import/no-unresolved": false,
+    "import/extensions": false,
+    "import/resolver": {
+      "node": true,
+      "eslint-import-resolver-typescript": true
+    }
+  }
+}
