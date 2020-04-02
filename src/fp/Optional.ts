@@ -15,6 +15,12 @@ export abstract class Optional<A> {
       : Optional.some(a);
   }
 
+  abstract isDefined(): boolean
+
+  abstract isEmpty(): boolean
+
+  abstract orElse(or: Optional<A>): Optional<A>
+
   abstract getOrElse(or: A): A
 
   abstract map<B>(f: (a: A) => B): Optional<B>
@@ -24,6 +30,18 @@ export abstract class Optional<A> {
 
 export class Some<A> extends Optional<A> {
   constructor(private readonly value: A) { super(); }
+
+  isDefined(): boolean {
+    return true;
+  }
+
+  isEmpty(): boolean {
+    return false;
+  }
+
+  orElse(or: Optional<A>): Optional<A> {
+    return this;
+  }
 
   getOrElse(or: A): A {
     return this.value;
@@ -39,6 +57,18 @@ export class Some<A> extends Optional<A> {
 }
 
 export class None<A> extends Optional<A> {
+
+  isDefined(): boolean {
+    return false;
+  }
+
+  isEmpty(): boolean {
+    return true;
+  }
+
+  orElse(or: Optional<A>): Optional<A> {
+    return or;
+  }
 
   getOrElse(or: A): A {
     return or;
