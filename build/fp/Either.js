@@ -20,6 +20,9 @@ class Left extends Either {
     map(f) {
         return Either.left(this.value);
     }
+    leftMap(f) {
+        return Either.left(f(this.value));
+    }
     flatMap(f) {
         return Either.left(this.value);
     }
@@ -35,6 +38,9 @@ class Right extends Either {
     }
     map(f) {
         return Either.right(f(this.value));
+    }
+    leftMap(f) {
+        return Either.right(this.value);
     }
     flatMap(f) {
         return f(this.value);

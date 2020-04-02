@@ -19,6 +19,15 @@ class Some extends Optional {
         super();
         this.value = value;
     }
+    isDefined() {
+        return true;
+    }
+    isEmpty() {
+        return false;
+    }
+    orElse(or) {
+        return this;
+    }
     getOrElse(or) {
         return this.value;
     }
@@ -31,6 +40,15 @@ class Some extends Optional {
 }
 exports.Some = Some;
 class None extends Optional {
+    isDefined() {
+        return false;
+    }
+    isEmpty() {
+        return true;
+    }
+    orElse(or) {
+        return or;
+    }
     getOrElse(or) {
         return or;
     }
