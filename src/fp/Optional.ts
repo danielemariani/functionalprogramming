@@ -21,6 +21,8 @@ export abstract class Optional<A> {
 
   abstract orElse(or: Optional<A>): Optional<A>
 
+  abstract get(): A
+
   abstract getOrElse(or: A): A
 
   abstract map<B>(f: (a: A) => B): Optional<B>
@@ -41,6 +43,10 @@ export class Some<A> extends Optional<A> {
 
   orElse(or: Optional<A>): Optional<A> {
     return this;
+  }
+
+  get(): A {
+    return this.value;
   }
 
   getOrElse(or: A): A {
@@ -68,6 +74,10 @@ export class None<A> extends Optional<A> {
 
   orElse(or: Optional<A>): Optional<A> {
     return or;
+  }
+
+  get(): A {
+    throw new Error('Cannot get Optional value because it is empty');
   }
 
   getOrElse(or: A): A {
