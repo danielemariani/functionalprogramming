@@ -28,6 +28,9 @@ class Some extends Optional {
     orElse(or) {
         return this;
     }
+    get() {
+        return this.value;
+    }
     getOrElse(or) {
         return this.value;
     }
@@ -48,6 +51,9 @@ class None extends Optional {
     }
     orElse(or) {
         return or;
+    }
+    get() {
+        throw new Error('Cannot get Optional value because it is empty');
     }
     getOrElse(or) {
         return or;
