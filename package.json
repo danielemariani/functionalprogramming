@@ -1,6 +1,6 @@
 {
-  "name": "functional-programming",
-  "version": "1.2.1",
+  "name": "functionalprogramming",
+  "version": "1.2.2",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
