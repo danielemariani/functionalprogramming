@@ -1,3 +1,4 @@
+import { AsyncTaskEither } from './AsyncTaskEither';
 
 export abstract class Either<L, R> {
 
@@ -16,6 +17,8 @@ export abstract class Either<L, R> {
   abstract leftMap<L2>(f: (v: L) => L2): Either<L2, R>
 
   abstract flatMap<R2>(f: (v: R) => Either<L, R2>): Either<L, R2>
+
+  abstract toAsyncTaskEither(): AsyncTaskEither<L, R>
 }
 
 export class Left<L> extends Either<L, never> {
@@ -39,6 +42,10 @@ export class Left<L> extends Either<L, never> {
   flatMap<R2>(f: (v: never) => Either<L, R2>): Either<L, R2> {
     return Either.left(this.value);
   }
+
+  toAsyncTaskEither(): AsyncTaskEither<L, never> {
+    return new AsyncTaskEither(() => Either.left(this.value));
+  }
 }
 
 export class Right<R> extends Either<never, R> {
@@ -61,5 +68,9 @@ export class Right<R> extends Either<never, R> {
 
   flatMap<R2>(f: (v: R) => Either<never, R2>): Either<never, R2> {
     return f(this.value);
+  }
+
+  toAsyncTaskEither(): AsyncTaskEither<never, R> {
+    return new AsyncTaskEither(() => Either.right(this.value));
   }
 }

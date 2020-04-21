@@ -1,3 +1,4 @@
+import { Either } from './Either';
 
 export abstract class Optional<A> {
 
@@ -28,6 +29,8 @@ export abstract class Optional<A> {
   abstract map<B>(f: (a: A) => B): Optional<B>
 
   abstract flatMap<B>(f: (a: A) => Optional<B>): Optional<B>
+
+  abstract toEither<L>(l: L): Either<L, A>
 }
 
 export class Some<A> extends Optional<A> {
@@ -60,6 +63,10 @@ export class Some<A> extends Optional<A> {
   flatMap<B>(f: (a: A) => Optional<B>): Optional<B> {
     return f(this.value);
   }
+
+  toEither<L>(l: L): Either<L, A> {
+    return Either.right(this.value);
+  }
 }
 
 export class None<A> extends Optional<A> {
@@ -90,5 +97,9 @@ export class None<A> extends Optional<A> {
 
   flatMap<B>(f: (a: A) => Optional<B>): Optional<B> {
     return new None();
+  }
+
+  toEither<L>(l: L): Either<L, A> {
+    return Either.left(l);
   }
 }
