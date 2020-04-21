@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const AsyncTaskEither_1 = require("./AsyncTaskEither");
 class Either {
     static left(l) {
         return new Left(l);
@@ -26,6 +27,9 @@ class Left extends Either {
     flatMap(f) {
         return Either.left(this.value);
     }
+    toAsyncTaskEither() {
+        return new AsyncTaskEither_1.AsyncTaskEither(() => Either.left(this.value));
+    }
 }
 exports.Left = Left;
 class Right extends Either {
@@ -44,6 +48,9 @@ class Right extends Either {
     }
     flatMap(f) {
         return f(this.value);
+    }
+    toAsyncTaskEither() {
+        return new AsyncTaskEither_1.AsyncTaskEither(() => Either.right(this.value));
     }
 }
 exports.Right = Right;

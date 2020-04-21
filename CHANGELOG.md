@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.3.0
+------
+* `Nullable`, `accumulate`, `passThrough`, `executeAndThow`
+* `Optional.toEither`
+* `Either.toAsyncTaskEither`
+
 1.2.0
 ------
 * `.get()` or break method on Optional

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Either_1 = require("./Either");
 class Optional {
     static some(value) {
         return new Some(value);
@@ -40,6 +41,9 @@ class Some extends Optional {
     flatMap(f) {
         return f(this.value);
     }
+    toEither(l) {
+        return Either_1.Either.right(this.value);
+    }
 }
 exports.Some = Some;
 class None extends Optional {
@@ -63,6 +67,9 @@ class None extends Optional {
     }
     flatMap(f) {
         return new None();
+    }
+    toEither(l) {
+        return Either_1.Either.left(l);
     }
 }
 exports.None = None;
