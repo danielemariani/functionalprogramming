@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.4.0
+------
+* `AsyncTaskEither` static factory methods and `mapLeft`, `flatMapLeft`
+
 1.3.0
 ------
 * `Nullable`, `accumulate`, `passThrough`, `executeAndThow`
