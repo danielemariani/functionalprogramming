@@ -15,13 +15,27 @@ class AsyncTaskEither {
     constructor(task) {
         this.task = task;
     }
+    static right(r) {
+        return new AsyncTaskEither(() => Either_1.Either.right(r));
+    }
+    static left(l) {
+        return new AsyncTaskEither(() => Either_1.Either.left(l));
+    }
     map(f) {
         return new AsyncTaskEither(() => this.execute()
             .then(r => r.fold((l) => Either_1.Either.left(l), (r) => Either_1.Either.right(f(r)))));
     }
+    mapLeft(f) {
+        return new AsyncTaskEither(() => this.execute()
+            .then(r => r.fold((l) => Either_1.Either.left(f(l)), (r) => Either_1.Either.right(r))));
+    }
     flatMap(f) {
         return new AsyncTaskEither(() => this.execute()
             .then(r => r.fold((l) => new AsyncTaskEither(() => Either_1.Either.left(l)), (r) => f(r)).execute()));
+    }
+    flatMapLeft(f) {
+        return new AsyncTaskEither(() => this.execute()
+            .then(r => r.fold((l) => f(l), (r) => new AsyncTaskEither(() => Either_1.Either.right(r))).execute()));
     }
     toAsyncTask() {
         return new AsyncTask_1.AsyncTask(() => this.execute()
