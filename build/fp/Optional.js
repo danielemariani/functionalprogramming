@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.None = exports.Some = exports.Optional = void 0;
 const Either_1 = require("./Either");
 class Optional {
     static some(value) {

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AsyncTaskEither = void 0;
 const Either_1 = require("./Either");
 const AsyncTask_1 = require("./AsyncTask");
 class AsyncTaskEither {
@@ -20,6 +21,17 @@ class AsyncTaskEither {
     }
     static left(l) {
         return new AsyncTaskEither(() => Either_1.Either.left(l));
+    }
+    static wrap(p, handleError) {
+        return new AsyncTaskEither(() => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield p();
+                return Either_1.Either.right(result);
+            }
+            catch (e) {
+                return Either_1.Either.left(handleError(e));
+            }
+        }));
     }
     map(f) {
         return new AsyncTaskEither(() => this.execute()
@@ -36,6 +48,9 @@ class AsyncTaskEither {
     flatMapLeft(f) {
         return new AsyncTaskEither(() => this.execute()
             .then(r => r.fold((l) => f(l), (r) => new AsyncTaskEither(() => Either_1.Either.right(r))).execute()));
+    }
+    handleExceptions(handle) {
+        return new AsyncTaskEither(() => this.execute().catch(e => Either_1.Either.left(handle(e))));
     }
     toAsyncTask() {
         return new AsyncTask_1.AsyncTask(() => this.execute()

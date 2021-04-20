@@ -14,6 +14,17 @@ export class AsyncTaskEither<L, R> {
     return new AsyncTaskEither<L, never>(() => Either.left(l));
   }
 
+  static wrap<L, R>(p: () => Promise<R>, handleError: (e: Error) => L): AsyncTaskEither<L, R> {
+    return new AsyncTaskEither(async () => {
+      try {
+        const result = await p();
+        return Either.right(result);
+      } catch (e) {
+        return Either.left(handleError(e));
+      }
+    });
+  }
+
   constructor(task: () => ValueOrPromiseOf<Either<L, R>>) {
     this.task = task;
   }
@@ -53,6 +64,12 @@ export class AsyncTaskEither<L, R> {
           (l) => f(l),
           (r) => new AsyncTaskEither<L2, R>(() => Either.right(r)),
         ).execute())
+    );
+  }
+
+  handleExceptions(handle: (e: Error) => L): AsyncTaskEither<L, R> {
+    return new AsyncTaskEither<L, R>(
+      () => this.execute().catch(e => Either.left(handle(e)))
     );
   }
 

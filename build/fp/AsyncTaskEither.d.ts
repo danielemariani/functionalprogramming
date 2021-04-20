@@ -5,11 +5,13 @@ export declare class AsyncTaskEither<L, R> {
     private readonly task;
     static right<R>(r: R): AsyncTaskEither<never, R>;
     static left<L>(l: L): AsyncTaskEither<L, never>;
+    static wrap<L, R>(p: () => Promise<R>, handleError: (e: Error) => L): AsyncTaskEither<L, R>;
     constructor(task: () => ValueOrPromiseOf<Either<L, R>>);
     map<R2>(f: (r: R) => R2): AsyncTaskEither<L, R2>;
     mapLeft<L2>(f: (l: L) => L2): AsyncTaskEither<L2, R>;
     flatMap<R2>(f: (r: R) => AsyncTaskEither<L, R2>): AsyncTaskEither<L, R2>;
     flatMapLeft<L2>(f: (l: L) => AsyncTaskEither<L2, R>): AsyncTaskEither<L2, R>;
+    handleExceptions(handle: (e: Error) => L): AsyncTaskEither<L, R>;
     toAsyncTask(): AsyncTask<R>;
     execute(): Promise<Either<L, R>>;
 }

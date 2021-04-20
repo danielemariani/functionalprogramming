@@ -8,7 +8,7 @@
     "types": ["node", "jest"],
     "typeRoots": [
       "@types",
-      "./@types"
+      "./@types","node_modules/@types"
     ]
   },
   "include": [

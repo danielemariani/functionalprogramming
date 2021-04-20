@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Right = exports.Left = exports.Either = void 0;
 const AsyncTaskEither_1 = require("./AsyncTaskEither");
 class Either {
     static left(l) {
